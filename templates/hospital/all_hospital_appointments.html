@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+        <h1 class="display-7 fw-bold">Appointments</h1>
+        <p class="col-md-8 fs-4">The list below contains only Appointments scheduled for todya</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Patient's First Name</th>
+                    <th scope="col">Patient's Surname</th>
+                    <th scope="col">Scheduled Date</th>
+                    <th scope="col">Reason</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                    <td>{{appointment.patient.first_name}}</td>
+                    <td>{{appointment.patient.surname}}</td>
+                    <td>{{appointment.date}}</td>
+                    <td>{{appointment.reason}}</td>
+                    <td>Assign Doctor</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

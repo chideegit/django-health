@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib import messages
 from .form import *
 from .models import * 
+import datetime
 
 # only global admin can do this
 def add_hospital(request):
@@ -67,4 +68,9 @@ def book_appointment(request, pk):
         form = BookAppointmentForm()
         context = {'form':form}
     return render(request, 'hospital/book_appointment.html', context)
-        
+
+def all_hospital_appointments(request):
+    appointments = Appointment.objects.filter(hospital = request.user.hospital, date=datetime.datetime.today())
+    context = {'appointments':appointments}
+    return render(request, 'hospital/all_hospital_appointments.html', context)
+    # Only show patient up for the present day only. 
