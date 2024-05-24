@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+        <h1 class="display-7 fw-bold">All Hospitals</h1>
+        <p class="col-md-8 fs-4">Filter through hospitals and know the one to pick for medical attention</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hospital in hospitals %}
+                <tr>
+                    <td>{{hospital.name}}</td>
+                    <td>{{hospital.address}}</td>
+                    <td>{{hospital.state}}</td>
+                    <td>{{hospital.country}}</td>
+                    {% if request.user.is_superuser %}
+                    <td>Update, Delete</td>
+                    {% elif request.user.is_patient %}
+                    <td><a href="{% url 'book-appointment' hospital.pk %}" class="btn btn-primary btn-sm">Select</a></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

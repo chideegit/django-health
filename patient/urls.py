@@ -6,5 +6,6 @@ urlpatterns = [
     path('update-patient/<int:pk>/', update_patient, name='update-patient'), 
     path('add-emergency-contact', add_emergency_contact, name='add-emergency-contact'),
     path('update-emergency-contact/<int:pk>/', update_emergency_contact, name='update-emergency-contact'), 
-    path('all-emergency-contacts/', all_emergency_contacts, name='all-emergency-contacts')
+    path('all-emergency-contacts/', all_emergency_contacts, name='all-emergency-contacts'), 
+    path('your-appointments/', your_appointments, name='your-appointments')
 ]

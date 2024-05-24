@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from .models import * 
 from .form import *
+from hospital.models import Appointment
 
 User = get_user_model()
 
@@ -81,3 +82,8 @@ def all_emergency_contacts(request):
     contacts = EmergencyContact.objects.filter(patient=request.user)
     context = {'contacts':contacts}
     return render(request, 'patient/all_emergency_contacts.html', context)
+
+def your_appointments(request):
+    appointments = Appointment.objects.filter(patient=request.user)
+    context = {'appointments':appointments}
+    return render(request, 'patient/your_appointments.html', context)

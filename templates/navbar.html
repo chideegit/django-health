@@ -1,0 +1,62 @@
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        {% if request.user.is_patient %}
+        <li class="nav-item">
+            {% if request.user.is_patient and not request.user.has_patient_profile %}
+            <a class="nav-link" href="{% url 'add-patient' %}">Profile</a>
+            {% else %}
+            <a class="nav-link" href="{% url 'update-patient' request.user.pk %}">Profile</a>
+            {% endif %}
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Emergency Contacts
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{% url 'add-emergency-contact' %}">Add Contact</a></li>
+                <li><a class="dropdown-item" href="{% url 'all-emergency-contacts' %}">View Contacts</a>
+                </li>
+
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Appointments
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{% url 'all-hospitals' %}">Book Appointment</a></li>
+                <li><a class="dropdown-item" href="{% url 'your-appointments' %}">Your Appointments</a>
+                </li>
+
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+        {% elif request.user.is_doctor %}
+        {% elif request.user.is_superuser %}
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Hospital Mgt.
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{% url 'add-hospital' %}">Add Hospital</a></li>
+                <li><a class="dropdown-item" href="{% url 'all-hospitals' %}">View Hosptals</a>
+                </li>
+
+            </ul>
+        </li>
+        {% endif %}
+    </ul>
+    <a href="{% url 'logout' %}" class="btn btn-warning btn-sm">Logout</a>
+    <!-- <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form> -->
+</div>

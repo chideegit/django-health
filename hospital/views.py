@@ -4,6 +4,7 @@ from django.contrib import messages
 from .form import *
 from .models import * 
 
+# only global admin can do this
 def add_hospital(request):
     if request.method == 'POST':
         form = AddHospitalForm(request.POST)
@@ -19,6 +20,7 @@ def add_hospital(request):
         context = {'form':form}
     return render(request, 'hospital/add_hospital.html', context)
 
+# only global admins can do this
 def update_hospital(request, pk):
     hospital = Hospital.objects.get(pk=pk)
     if request.method == 'POST':
@@ -35,10 +37,16 @@ def update_hospital(request, pk):
         context = {'form':form}
     return render(request, 'hospital/update_hospital.html', context)
 
+# can be seen by everyone
 def hospital_details(request, pk):
     hospital = Hospital.objects.get(pk=pk)
     context = {'hospital':hospital}
     return render(request, 'hospital/hospital_details.html', context)
+
+def all_hospitals(request):
+    hospitals = Hospital.objects.all()
+    context = {'hospitals':hospitals}
+    return render(request, 'hospital/all_hospitals.html', context)
 
 def book_appointment(request, pk):
     hospital = Hospital.objects.get(pk=pk)
@@ -50,13 +58,13 @@ def book_appointment(request, pk):
             var.hospital = hospital
             var.status = 'Scheduled'
             var.save()
-            messages.success(request, 'Your profile and hospital has been paired')
+            messages.success(request, f'You have booked an appointment with {hospital.name} for {var.date}')
             return redirect('dashboard')
         else:
             messages.warning(request, 'Something went wrong')
-            return redirect('add-visit')
+            return redirect(reverse('book-appointment', args=[hospital.pk]))
     else:
         form = BookAppointmentForm()
         context = {'form':form}
-    return render(request, 'hospital/add_visit.html', context)
+    return render(request, 'hospital/book_appointment.html', context)
         

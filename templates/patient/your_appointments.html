@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+        <h1 class="display-7 fw-bold">Your Appointments</h1>
+        <p class="col-md-8 fs-4">Here's a list of all your appointments</p>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Hospital Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                    <td>{{appointment.hospital.name}}</td>
+                    <td>{{appointment.hospital.address}} {{appointment.hospital.state}}, {{appointment.hospital.country}}</td>
+                    <td>{{appointment.date}}</td>
+                    <td>{{appointment.status}}</td>
+                    <td>Cancel Appointment</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}
